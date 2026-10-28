@@ -1,0 +1,24 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Data (raw data lives in the warehouse, not git)
+data/
+
+# dbt
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
