@@ -201,10 +201,10 @@ Target v1.0: 11 Feb 2027.
 
 ## Board setup (GitHub Projects)
 
-- **Fields:** Status (Backlog, Ready, In progress, Review, Done), Priority, Size, Epic, Iteration (2 weeks = 4 sessions)
+- **Fields:** Status (Backlog, Ready, In progress, Review, Done), Priority, Size, Epic. Weeks use the built-in Milestone field.
 - **Views:**
-  - Board, grouped by Status, filtered to the current iteration
-  - Table of everything, grouped by Milestone
-  - Roadmap by milestone due dates
+  - Kanban: every story, in Status columns
+  - This week: Kanban filtered to the current milestone
+  - Backlog: table of every story
 - **Epics:** single-select field on the board plus `epic:*` labels
-- **Automation:** new issue → Backlog; PR merged → Done
+- **Automation:** closing an issue doesn't always move its card, so check it reached Done
