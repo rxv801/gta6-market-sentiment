@@ -4,7 +4,9 @@ version = "0.1.0"
 description = "Event study of GTA VI news vs Take-Two/Sony stock and public attention"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "psycopg[binary]>=3.2",
+]
 
 [dependency-groups]
 dev = [
