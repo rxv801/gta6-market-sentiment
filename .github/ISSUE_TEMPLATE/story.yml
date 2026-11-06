@@ -1,0 +1,19 @@
+name: Story
+description: A planned piece of work for the backlog
+labels: ["type:story"]
+body:
+  - type: input
+    id: id
+    attributes:
+      label: Ticket ID
+      description: Epic code + next number, e.g. ING-9 (also add it to docs/backlog.md)
+    validations:
+      required: true
+  - type: textarea
+    id: ac
+    attributes:
+      label: Acceptance criteria
+      value: |
+        - [ ]
+    validations:
+      required: true
