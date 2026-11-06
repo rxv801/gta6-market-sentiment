@@ -2,7 +2,7 @@
 
 How Grand Theft Auto VI announcements, trailers, leaks, delays and launch relate to Take-Two and Sony stock moves and to public attention.
 
-**Status:** Sprint 0 (kickoff). Work in progress. See the [project board](https://github.com/users/rxv801/projects/1) and the [one-pager](docs/one-pager.md).
+**Status:** Sprint 0 (kickoff). Work in progress. See the [one-pager](docs/one-pager.md).
 
 ## Repository layout
 
