@@ -1,0 +1,21 @@
+name: YouTube snapshot (stopgap)
+
+on:
+  schedule:
+    - cron: "15 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+      - run: uv sync --locked
+      - name: Save snapshot
+        run: uv run python -m spike.youtube_snapshot
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}

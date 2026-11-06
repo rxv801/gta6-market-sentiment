@@ -14,7 +14,9 @@ How Grand Theft Auto VI announcements, trailers, leaks, delays and launch relate
 | `ml/` | Sentiment scoring and evaluation |
 | `dashboard/` | Dashboard app and screenshots |
 | `docs/` | One-pager, design doc, ADRs, backlog |
-| `scripts/` | One-off project tooling (GitHub setup) |
+| `scripts/` | One-off project tooling (GitHub and database setup) |
+| `sql/` | Database schema |
+| `spike/` | Throwaway stopgap scripts |
 | `tests/` | pytest tests |
 
 ## Getting started
