@@ -1,8 +1,10 @@
 # Design doc
 
-Status: v1.0 · Owner: Rex · Last updated: 29 Oct 2026
+Status: v1.0 · Owner: Rex · Last updated: 7 Nov 2026
 
 What we're building and why is in the [one-pager](one-pager.md). This doc covers how. Individual decisions are recorded as ADRs in [adr/](adr/).
+
+This is the full design. The first release leaves out Reddit, the sentiment model, Airflow and the Sony analysis.
 
 ## Architecture
 
@@ -47,14 +49,14 @@ Two things drive the shape of this:
 
 ## Collectors
 
-Each source gets one module in `extract/`, with a `run()` that fetches and loads. They share one loader that writes to bronze.
+Each source gets one module in `extract/`, with a `main()` that fetches and loads. They share one loader that writes to bronze.
 
 | Collector | Schedule (UTC) | Notes |
 |---|---|---|
-| YouTube | Daily 00:15 | Tracked video IDs live in a config file |
-| Twitch | Every 30 min | Category viewers and stream count; starts by 5 Nov for a baseline |
+| YouTube | Daily 01:37 and 13:37 | Tracked video IDs live in a config file. Two runs in case one is skipped |
+| Twitch | Every 30 min | Category viewers and stream count. Disabled for now: Twitch had no GTA VI category on 7 Nov 2026. Re-enable at preload on 12 Nov |
 | Reddit | Daily 01:00 | Spoiler filter and username hashing at ingestion |
-| Stocks | Weekdays 22:30 | After US close. Tokyo prices for the same date are already final |
+| Stocks | Weeknights 22:23, backup 07:23 Tue-Sat | Both run with every market shut. Each run re-fetches 10 days, so a missed run fills itself in |
 | Google Trends | One-off backfill, then weekly | Daily series built from overlapping windows (method in ING-6) |
 
 Scheduled Actions can start late or occasionally skip a run when GitHub is busy. Every row stores the real collection time, and analysis never assumes runs were evenly spaced.
@@ -63,7 +65,7 @@ The repo is public, so Actions minutes are free.
 
 ## Bronze schema
 
-Every source writes to the same shape. Bronze is append only. Nothing in it is updated or deleted, except deletions required by a source's terms.
+Every source writes to the same shape. Bronze is append only. Nothing in it is updated or deleted, except deletions required by a source's terms. Re-runs add rows, because the collector role can't read what's already there, so staging models keep the latest row per key.
 
 ```sql
 create schema bronze;
@@ -96,13 +98,13 @@ Two pieces of logic need care:
 
 ## Sentiment scoring
 
-A batch job in `ml/` runs on my laptop using the M4's GPU through PyTorch MPS. It reads unscored comments from bronze, scores them with `cardiffnlp/twitter-roberta-base-sentiment-latest`, and writes scores back to a bronze table. dbt builds the daily aggregates from there. VADER runs alongside as a baseline for the evaluation (ML-3).
+A batch job in `ml/` runs on my laptop using the M4's GPU through PyTorch MPS. It reads unscored comments from bronze, scores them with `cardiffnlp/twitter-roberta-base-sentiment-latest`, and writes scores to a new bronze table using the `transformer` role. dbt builds the daily aggregates from there. VADER runs alongside as a baseline for the evaluation (ML-3).
 
 ## Monitoring
 
-- GitHub emails me when a workflow fails.
+- GitHub emails me when a workflow fails. It sends nothing if a scheduled run never starts, so only the health check below catches that.
 - Collectors fail on purpose (non-zero exit) if a response is empty or not a 200, so that silent gaps become visible failures.
-- A daily health check counts rows per source per day and fails if any source is missing (OPS-6).
+- A daily health check counts rows per source per day and fails if any source is missing (OPS-6). Not built yet.
 - Incidents get a short write-up in `docs/incidents/`.
 
 ## Testing
@@ -123,4 +125,4 @@ A batch job in `ml/` runs on my laptop using the M4's GPU through PyTorch MPS. I
 ## Open questions
 
 - Which dashboard tool to use (ADR-004, proposed).
-- Whether YouTube's terms allow keeping a long daily history of view counts (see [data governance](data-governance.md)).
+- How to handle YouTube's 30-day storage limit on statistics, by 6 Dec 2026 (see [data governance](data-governance.md)).

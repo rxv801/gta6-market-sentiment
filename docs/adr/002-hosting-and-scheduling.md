@@ -18,7 +18,7 @@ Collection keeps running while the laptop is closed, and Actions minutes are fre
 
 Things to watch:
 
-- The Supabase free tier has 500 MB of storage and no backups. Comment text is the largest thing we store, so it's deleted 90 days after scoring, and a weekly dump is kept outside Supabase (OPS-7).
+- The Supabase free tier has 500 MB of storage and no backups. Comment text is the largest thing we store, so it's deleted on the schedule in [data governance](../data-governance.md). A weekly dump outside Supabase is planned (OPS-7).
 - Supabase pauses free projects after a week without activity. Daily collector writes prevent that.
 - Scheduled Actions can run late or skip. Rows store the real fetch time.
 
