@@ -1,0 +1,26 @@
+# Official GTA VI videos on the Rockstar Games channel. Add a video here to start tracking it.
+# Each ID was checked against YouTube's oEmbed endpoint: author "Rockstar Games".
+
+[[video]]
+id = "QdBZY2fkU-0"
+name = "Trailer 1"
+
+[[video]]
+id = "VQRLujxTm3c"
+name = "Trailer 2"
+
+[[video]]
+id = "EiQEBYDox_k"
+name = "Official Cover Art Reveal"
+
+[[video]]
+id = "qq76pQsI1iw"
+name = "An Extended Look Coming August 27"
+
+[[video]]
+id = "tJbzMqJGH4k"
+name = "An Extended Look"
+
+[[video]]
+id = "rz1B4B2yBZY"
+name = "Launch Trailer"
