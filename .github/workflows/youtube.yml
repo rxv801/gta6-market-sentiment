@@ -1,12 +1,14 @@
-name: YouTube snapshot (stopgap)
+name: YouTube collector
 
 on:
   schedule:
-    - cron: "15 0 * * *"
+    # Twice a day because GitHub can skip scheduled runs. Staging keeps one reading per video per day.
+    - cron: "37 1 * * *"
+    - cron: "37 13 * * *"
   workflow_dispatch:
 
 jobs:
-  snapshot:
+  collect:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -14,8 +16,8 @@ jobs:
         with:
           enable-cache: true
       - run: uv sync --locked
-      - name: Save snapshot
-        run: uv run python -m spike.youtube_snapshot
+      - name: Save video stats
+        run: uv run python -m extract.youtube
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
