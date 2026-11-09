@@ -3,8 +3,9 @@ name: Stock prices
 on:
   schedule:
     # Weeknights after the US close. The second run is a backstop because GitHub can skip scheduled runs.
+    # Both run with every market shut (US closes by 21:00 UTC, Tokyo by 06:30 UTC), so no partial day is saved.
     - cron: "23 22 * * 1-5"
-    - cron: "23 4 * * 2-6"
+    - cron: "23 7 * * 2-6"
   workflow_dispatch:
     inputs:
       backfill:
