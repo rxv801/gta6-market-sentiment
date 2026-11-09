@@ -1,0 +1,28 @@
+name: Google Trends
+
+on:
+  schedule:
+    # Daily. The second run is a backup because GitHub can start scheduled runs hours late or skip them.
+    - cron: "53 3 * * *"
+    - cron: "53 15 * * *"
+  workflow_dispatch:
+    inputs:
+      backfill:
+        description: Fetch every window since 2021
+        type: boolean
+        default: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+      - run: uv sync --locked
+      - name: Save search interest
+        run: uv run python -m extract.trends ${{ inputs.backfill && '--backfill' || '' }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
