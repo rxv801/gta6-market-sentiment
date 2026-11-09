@@ -11,7 +11,7 @@ This project uses YouTube API Services. By using or reading this project's YouTu
 ## What we collect
 
 - **YouTube:** view, like and comment counts for official Rockstar Games videos, read with an API key. If comment sentiment is added, public comment text is stored only so it can be scored, then deleted within 30 days of being fetched. Commenter names and channel IDs are not stored. Comments are never quoted or displayed.
-- **Other sources:** daily stock prices. Google Trends search interest and Twitch category totals (total viewers and stream counts only, no usernames or stream titles) are planned but not collected yet.
+- **Other sources:** daily stock prices and Google Trends search interest. Twitch category totals (total viewers and stream counts only, no usernames or stream titles) are planned but not collected yet.
 
 We don't use YouTube sign-in, and we don't access, collect or store any data from your YouTube or Google account. This project doesn't set cookies or add tracking of its own. The project is hosted on GitHub, and the dashboard will be hosted by a third party, so their own privacy policies and cookies apply on those sites.
 
