@@ -2,7 +2,7 @@
 
 How Grand Theft Auto VI announcements, trailers, leaks, delays and launch relate to Take-Two and Sony stock moves and to public attention.
 
-**Status:** Work in progress. Collecting YouTube statistics and stock prices since 6 Nov 2026. See the [one-pager](docs/one-pager.md).
+**Status:** Work in progress. Collecting YouTube statistics since 6 Nov 2026 and daily stock prices since 7 Nov 2026 (with history back to 2021). See the [one-pager](docs/one-pager.md).
 
 ## Repository layout
 
