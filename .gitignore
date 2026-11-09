@@ -22,3 +22,10 @@ dbt/dbt_packages/
 .DS_Store
 .idea/
 .vscode/
+
+# dbt
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+logs/
+dbt/.user.yml

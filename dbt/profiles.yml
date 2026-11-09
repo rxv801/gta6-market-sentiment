@@ -1,0 +1,25 @@
+# No secrets here: every credential comes from an environment variable.
+# dev:  local Postgres (Homebrew), database gta6_dev. Run `make dbt-dev-db` once to create it.
+# prod: Supabase with the transformer role, via the Session pooler. Credentials live in .env and GitHub secrets.
+gta6:
+  target: "{{ env_var('DBT_TARGET', 'dev') }}"
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('DBT_DEV_HOST', 'localhost') }}"
+      port: 5432
+      user: "{{ env_var('DBT_DEV_USER', env_var('USER', 'postgres')) }}"
+      password: "{{ env_var('DBT_DEV_PASSWORD', '') }}"
+      dbname: gta6_dev
+      schema: dev
+      threads: 4
+    prod:
+      type: postgres
+      host: "{{ env_var('DBT_PROD_HOST', '') }}"
+      port: 5432
+      user: "{{ env_var('DBT_PROD_USER', '') }}"
+      password: "{{ env_var('DBT_PROD_PASSWORD', '') }}"
+      dbname: postgres
+      schema: analytics
+      threads: 4
+      sslmode: require
