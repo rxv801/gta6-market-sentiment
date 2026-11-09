@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: stg_youtube__video_stats
+    description: YouTube view, like and comment counts, one row per video per collector run. Counts are YouTube's running totals.
+    columns:
+      - name: video_stat_id
+        data_tests: [unique, not_null]
+      - name: video_id
+        data_tests: [not_null]
+      - name: fetched_at
+        data_tests: [not_null]
+      - name: view_count
+        data_tests: [not_null]
+
+  - name: stg_yfinance__daily_prices
+    description: Daily prices per ticker, one row per ticker per trading day, latest fetch wins.
+    columns:
+      - name: price_id
+        data_tests: [unique, not_null]
+      - name: ticker
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["TTWO", "SONY", "6758.T", "^GSPC", "^NDX"]
+      - name: trade_date
+        data_tests: [not_null]
+      - name: adj_close_price
+        data_tests: [not_null]
+
+  - name: stg_google_trends__window_points
+    description: Google Trends values per term, window and day, before stitching. Values are 0 to 100 within each window.
+    columns:
+      - name: window_point_id
+        data_tests: [unique, not_null]
+      - name: search_term
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["GTA 6", "PS5 Pro", "Take-Two"]
+      - name: interest_value
+        data_tests: [not_null]
+
+  - name: stg_twitch__category_totals
+    description: Total viewers and live streams in the GTA VI category per poll.
+    columns:
+      - name: category_total_id
+        data_tests: [unique, not_null]
+      - name: viewer_count
+        data_tests: [not_null]
