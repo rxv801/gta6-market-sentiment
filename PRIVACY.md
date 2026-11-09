@@ -2,7 +2,7 @@
 
 Last updated: 9 November 2026
 
-This policy covers the GTA VI Market Event Study (https://github.com/rxv801/gta6-market-sentiment), a non-commercial research project run by one independent developer.
+This policy covers the GTA VI Market & Sentiment Study (https://github.com/rxv801/gta6-market-sentiment), a non-commercial research project run by one independent developer.
 
 ## YouTube API Services
 
