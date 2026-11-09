@@ -15,7 +15,7 @@ create table if not exists bronze.raw_payload (
 create index if not exists raw_payload_source_fetched_at_idx
     on bronze.raw_payload (source, fetched_at);
 
--- The password is set separately by scripts/provision_collector.py.
+-- The password is set separately by scripts/provision_role.py.
 do $$
 begin
     if not exists (select from pg_roles where rolname = 'collector') then
