@@ -1,0 +1,24 @@
+name: gta6
+version: "0.1.0"
+config-version: 2
+profile: gta6
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+target-path: target
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  gta6:
+    staging:
+      +schema: silver
+      +materialized: view
+    marts:
+      +schema: gold
+      +materialized: table
+
+seeds:
+  gta6:
+    +schema: silver

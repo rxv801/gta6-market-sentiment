@@ -1,0 +1,38 @@
+version: 2
+
+# Bronze is one append-only table. Each API source is declared as its own source table, filtered by the
+# `source` column, so freshness is checked per source and each gets one staging model.
+# Freshness limits match monitoring/health_check.py and allow for GitHub starting runs hours late.
+sources:
+  - name: bronze
+    schema: bronze
+    loaded_at_field: fetched_at
+    tables:
+      - name: youtube_videos
+        identifier: raw_payload
+        description: videos.list statistics for the tracked videos, twice a day.
+        freshness:
+          warn_after: {count: 24, period: hour}
+          error_after: {count: 30, period: hour}
+          filter: source = 'youtube' and endpoint = 'videos.list'
+
+      - name: yfinance_history
+        identifier: raw_payload
+        description: Daily prices per ticker. Each run re-fetches the last 10 days.
+        freshness:
+          warn_after: {count: 50, period: hour}
+          error_after: {count: 80, period: hour}
+          filter: source = 'yfinance' and endpoint = 'history'
+
+      - name: google_trends
+        identifier: raw_payload
+        description: Google Trends windows per term, stitched downstream. See docs/methods/google-trends.md.
+        freshness:
+          warn_after: {count: 24, period: hour}
+          error_after: {count: 36, period: hour}
+          filter: source = 'google_trends' and endpoint = 'interest_over_time'
+
+      - name: twitch_streams
+        identifier: raw_payload
+        description: Total viewers and streams for the GTA VI category. No freshness check until #21 re-enables the poller.
+        freshness: null
