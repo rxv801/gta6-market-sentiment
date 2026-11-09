@@ -25,7 +25,8 @@ The rule that follows from all of this: the public site and repo only ever show 
 
 Reddit and YouTube comments come with usernames, and the comment text itself can identify people. The project doesn't need to know who said anything, so:
 
-- Usernames and channel IDs are replaced with a salted SHA-256 hash at ingestion. The salt is a secret, so hashes can't be reversed by guessing names.
+- YouTube commenter names and channel IDs are not stored at all, as the [privacy policy](../PRIVACY.md) promises.
+- Reddit usernames are replaced with a salted SHA-256 hash at ingestion. The salt is a secret, so hashes can't be reversed by guessing names.
 - Comment text is stored in bronze only so the sentiment model can score it. It is never printed in logs or notebooks, never shown on the site, and never committed to git.
 - Reddit comment text is deleted 90 days after it has been scored. YouTube comment text is deleted within 30 days of being fetched, as its terms require, so it has to be scored inside that window. Whether YouTube scores can be kept depends on the 36-month permission.
 - The 200 hand-labelled samples are stored in the warehouse, not in the repo.
@@ -61,6 +62,8 @@ Supabase's auto-generated public API (the `anon` key) gets no access to these sc
 - If a source's terms require deleting data, the deletion is done in bronze and the downstream models are rebuilt.
 
 ## YouTube retention
+
+The public [privacy policy](../PRIVACY.md) and [terms of use](../TERMS.md) state these rules too, as YouTube's audit requires. The deletion job is tracked in GOV-2 (#82).
 
 The collector keeps a daily history of views, likes and comment counts, which the 30-day limit doesn't allow unless the 36-month permission is granted. The first row was saved on 6 Nov 2026, so it reaches 30 days on 6 Dec 2026.
 
