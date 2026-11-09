@@ -2,7 +2,15 @@
 
 How Grand Theft Auto VI announcements, trailers, leaks, delays and launch relate to Take-Two and Sony stock moves and to public attention.
 
+[Privacy policy](PRIVACY.md) · [Terms of use](TERMS.md)
+
 **Status:** Work in progress. Collecting YouTube statistics since 6 Nov 2026 and daily stock prices since 7 Nov 2026 (with history back to 2021). See the [one-pager](docs/one-pager.md).
+
+## Data sources
+
+YouTube view, like and comment counts come from the YouTube Data API, so YouTube is their source. Any figure calculated from them, such as daily change or sentiment, is this project's own calculation. Daily stock prices come from Yahoo Finance via yfinance. Google Trends and Twitch are planned.
+
+This project uses YouTube API Services. By using it you agree to the [YouTube Terms of Service](https://www.youtube.com/t/terms). See the [privacy policy](PRIVACY.md) and [terms of use](TERMS.md).
 
 ## Repository layout
 
