@@ -16,7 +16,8 @@ import psycopg
 MAX_AGE = {
     "youtube": timedelta(hours=30),  # twice a day
     "yfinance": timedelta(hours=80),  # weeknights, so Friday to Monday is the longest gap
-    # Add "twitch" when the poller is re-enabled (#21).
+    "google_trends": timedelta(hours=30),  # twice a day
+    # Add "twitch" once the GTA VI category exists and the poller saves rows (#21).
 }
 
 
