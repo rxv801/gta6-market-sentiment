@@ -32,6 +32,13 @@ def rows():
         return list(reader)
 
 
+def test_every_row_has_exactly_the_header_columns():
+    """An unquoted comma in a note adds a column, which DictReader hides under a None key and dbt seed rejects."""
+    with EVENTS.open(newline="") as f:
+        lengths = {line[0]: len(line) for line in csv.reader(f)}
+    assert {event: n for event, n in lengths.items() if n != len(COLUMNS)} == {}
+
+
 EVENT_ROWS = rows()
 
 
