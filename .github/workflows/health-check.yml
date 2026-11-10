@@ -1,0 +1,21 @@
+name: Collector health check
+
+on:
+  schedule:
+    # Every 6 hours. If GitHub's scheduler stops entirely this won't run either, so check the Actions tab each session.
+    - cron: "41 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+      - run: uv sync --locked
+      - name: Check every source loaded recently
+        run: uv run python -m monitoring.health_check
+        env:
+          MONITOR_DATABASE_URL: ${{ secrets.MONITOR_DATABASE_URL }}
