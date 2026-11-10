@@ -20,7 +20,7 @@ Everything is provided as is. The data comes from third parties and may be incom
 
 ## Other data sources
 
-Stock prices come from Yahoo Finance through the yfinance library and are not republished in raw form. Google Trends and Twitch data, once collected, are credited where shown. Each source's own terms apply.
+Stock prices come from Yahoo Finance through the yfinance library and are not republished in raw form. Google Trends data is credited "Source: Google Trends" wherever shown. Twitch data, once collected, is credited where shown. Each source's own terms apply.
 
 ## Not affiliated
 

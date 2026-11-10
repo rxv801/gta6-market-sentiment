@@ -1,4 +1,6 @@
-"""Apply sql/001_bronze.sql using the admin login in SUPABASE_ADMIN_URL.
+"""Apply every file in sql/ in name order using the admin login in SUPABASE_ADMIN_URL.
+
+Each file is safe to re-run.
 
 Usage:
     uv run --env-file .env python scripts/apply_schema.py
@@ -9,9 +11,10 @@ from pathlib import Path
 
 import psycopg
 
-SQL_FILE = Path(__file__).resolve().parent.parent / "sql" / "001_bronze.sql"
+SQL_DIR = Path(__file__).resolve().parent.parent / "sql"
 
 if __name__ == "__main__":
     with psycopg.connect(os.environ["SUPABASE_ADMIN_URL"]) as conn:
-        conn.execute(SQL_FILE.read_text())
-    print("Schema applied.")
+        for sql_file in sorted(SQL_DIR.glob("*.sql")):
+            conn.execute(sql_file.read_text())
+            print(f"Applied {sql_file.name}")

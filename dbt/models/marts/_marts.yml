@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: int_returns_daily
+    description: Daily simple return per ticker from adjusted close. The first day for each ticker has no return.
+    columns:
+      - name: return_id
+        data_tests: [unique, not_null]
+      - name: adj_close_price
+        data_tests: [not_null]
+
+  - name: fct_stock_daily
+    description: >
+      One row per ticker per trading day with its return and, for TTWO and SONY, the S&P 500 return on the same
+      date. This is the input to the market model (AN-1).
+    columns:
+      - name: stock_day_id
+        data_tests: [unique, not_null]
+      - name: ticker
+        data_tests: [not_null]
+      - name: trade_date
+        data_tests: [not_null]
