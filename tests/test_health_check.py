@@ -15,8 +15,10 @@ def test_stale_source_fails():
 
 
 def test_missing_source_fails():
-    assert find_problems({"youtube": NOW}, NOW) == ["yfinance: no rows at all"]
+    freshness = {source: NOW for source in MAX_AGE if source != "yfinance"}
+    assert find_problems(freshness, NOW) == ["yfinance: no rows at all"]
 
 
 def test_weekend_gap_for_stocks_is_allowed():
-    assert find_problems({"youtube": NOW, "yfinance": NOW - timedelta(hours=70)}, NOW) == []
+    freshness = {source: NOW for source in MAX_AGE} | {"yfinance": NOW - timedelta(hours=70)}
+    assert find_problems(freshness, NOW) == []
